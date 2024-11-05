@@ -12,7 +12,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build your Docker image
                     bat 'docker build -t my-nodejs-app .'
                 }
             }
@@ -20,7 +19,6 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Run tests here if you have any
                     echo 'Running tests...'
                 }
             }
@@ -28,7 +26,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy your Docker image
                     echo 'Deploying application...'
                 }
             }
