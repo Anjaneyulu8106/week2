@@ -2,11 +2,16 @@ pipeline {
     agent any 
 
     stages {
+        stage('Checkout SCM') {
+            steps {
+                git url: 'https://github.com/Anjaneyulu8106/week2.git', credentialsId: 'docker-hub-credentials'
+            }
+        }
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     script {
-                        // Log in to Docker Hub
+                        // Use bat for Windows
                         bat "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
                     }
                 }
@@ -14,28 +19,19 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    // Build your Docker image
-                    bat 'docker build -t my-nodejs-app .'
-                }
+                bat 'docker build -t my-nodejs-app .'
             }
         }
         stage('Test') {
             steps {
-                script {
-                    // Run tests here if you have any
-                    echo 'Running tests...'
-                    // Example: bat 'npm test'
-                }
+                echo 'Running tests...'
+                // Add test commands here
             }
         }
         stage('Deploy') {
             steps {
-                script {
-                    // Deploy your Docker image
-                    echo 'Deploying application...'
-                    // Example: bat 'docker push my-nodejs-app'
-                }
+                echo 'Deploying application...'
+                // Add deploy commands here
             }
         }
     }
